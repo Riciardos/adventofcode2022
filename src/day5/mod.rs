@@ -42,9 +42,8 @@ pub fn main() {
                 crate_move.execute_move_multiple(&mut start_position);
             }
         }
-        for i in 0..start_position.len() {
-            println!("Day 5 Last letter: {}", start_position[i].pop().unwrap())
-        }
+        let final_string: String = start_position.iter().map(|x| x.last().unwrap()).collect();
+        println!("Day 5 final letters: {}", final_string);
     };
 }
 

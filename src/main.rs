@@ -15,7 +15,7 @@ fn main() {
     let join_4 = thread::spawn(|| day4::main());
     let join_5 = thread::spawn(|| day5::main());
     let join_6 = thread::spawn(|| day6::main());
-    let join_7 = thread::spawn(day7::main());
+    let join_7 = thread::spawn(|| day7::main());
 
     join_1.join().expect("thread 1 panicked");
     join_2.join().expect("thread 2 panicked");

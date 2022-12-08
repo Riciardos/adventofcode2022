@@ -1,4 +1,3 @@
-$ cd /
 $ ls
 dir jmtrrrp
 dir jssnn

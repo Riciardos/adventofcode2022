@@ -57,10 +57,9 @@ pub fn main() {
                     let second = command.command_string.split_at(4).1;
                     let new_node_index = arena.get_new_index();
 
-                    let current_node = arena.node_at(current_node_idx);
+                    let mut current_node = arena.node_at(current_node_idx).unwrap();
                     let new_node = Node::new(second.to_string(), new_node_index, current_node_idx);
-
-                    current_node.unwrap().children.push(new_node.clone());
+                    current_node.children.push(new_node.clone());
                     arena.add_node(new_node);
 
                     continue;
@@ -81,26 +80,57 @@ pub fn main() {
                 }
             }
         }
-        arena.arena.iter().for_each(|x| {
-            let val = calculate_size(x.as_ref().unwrap(), 0);
-            println!("Calculated {} for {}", val, x.as_ref().unwrap().id)
-        });
-        println!("Day 7 Finished all commands!");
+        let mut sum: i32 = arena
+            .arena
+            .iter()
+            .map(|x| {
+                let node = x.clone();
+                let node_ref = &mut node.unwrap();
+                return calculate_size(node_ref, 0, arena.clone());
+            })
+            .filter(|x| x < &100_000)
+            .sum();
+
+        let mut potentials: Vec<Node> = vec![];
+        let dir_list: Vec<&Option<Node>> = arena
+            .arena
+            .iter()
+            .filter(|x| {
+                let x1 = *x;
+                let node = x1.clone();
+                let potential = x1.clone();
+                let node_ref = &mut node.unwrap();
+                let val = calculate_size(node_ref, 0, arena.clone());
+                if val > 358913 {
+                    let mut potential_copy = potential.clone().unwrap();
+                    potential_copy.val = val;
+                    potentials.push(potential_copy);
+                }
+                return val >= 358913;
+            })
+            .collect();
+
+        potentials.sort_by(|x, y| x.val.cmp(&y.val));
+        println!("Day 7 total sum: {:?}", sum);
+        println!("Day 7 potential dir: {:?}", potentials[0]);
     };
 }
 
-fn calculate_size(node: &Node, mut dir_sum: i32) -> i32 {
-    let val = node.val;
+fn calculate_size(node: &mut Node, mut dir_sum: i32, mut arena: Tree) -> i32 {
     return if node.children.is_empty() {
-        val
+        node.val
     } else {
-        println!("Node {} has value {}", node.id, node.val);
-        dir_sum = node
+        let sum_children: i32 = node
             .children
-            .iter()
-            .map(|mut x1| calculate_size(x1, dir_sum))
+            .iter_mut()
+            .map(|x| {
+                let arena_clone = arena.clone();
+                let child_node = arena.node_at(x.idx).unwrap();
+                calculate_size(child_node, dir_sum + child_node.val, arena_clone)
+            })
             .sum();
-        val + dir_sum
+        node.val += sum_children;
+        return node.val;
     };
 }
 

@@ -19,13 +19,16 @@ pub fn main() {
         arena.add_node(top_level_node.clone());
         arena.set_root(Some(top_level_node));
 
-        let mut commands: Vec<Command> = vec![];
+        let commands: Vec<Command> = lines
+            .map(|line| {
+                return if let Ok(command_line) = line {
+                    Command::new(command_line)
+                } else {
+                    Command::new("NOOP".to_string())
+                };
+            })
+            .collect();
 
-        for line in lines {
-            if let Ok(command_line) = line {
-                commands.push(Command::new(command_line))
-            }
-        }
         let mut current_node_idx: usize = 0;
 
         for command in commands {
@@ -222,6 +225,9 @@ impl Command {
         }
         if string.starts_with("dir") {
             return CommandType::AddDir;
+        }
+        if string.starts_with("NOOP") {
+            return CommandType::None;
         }
         return CommandType::AddFile;
     }

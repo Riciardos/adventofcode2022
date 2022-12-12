@@ -58,32 +58,29 @@ pub fn main() {
             match command.command_type {
                 CommandType::NoOp => {
                     for i in 0..command.cycles {
-                        let x_coord = (num_of_cycles % 40) as usize;
-                        let y_coord = (num_of_cycles / 40) as usize;
-                        let register_x_usize = register_x as usize;
-                        if (0 < register_x_usize && register_x_usize < 40)
-                            && (register_x_usize == x_coord
-                                || register_x_usize + 1 == x_coord
-                                || register_x_usize - 1 == x_coord)
+                        let x_coord = num_of_cycles % 40;
+                        let y_coord = num_of_cycles / 40;
+                        if (0 <= register_x && register_x < 40)
+                            && (register_x == x_coord
+                                || register_x + 1 == x_coord
+                                || register_x - 1 == x_coord)
                         {
-                            pixels[y_coord][x_coord] = '#';
+                            pixels[y_coord as usize][x_coord as usize] = '#';
                         }
                         num_of_cycles += 1;
                     }
                 }
                 CommandType::AddX => {
                     for i in 0..command.cycles {
-                        let x_coord = (num_of_cycles % 40) as usize;
-                        let y_coord = (num_of_cycles / 40) as usize;
+                        let x_coord = num_of_cycles % 40;
+                        let y_coord = num_of_cycles / 40;
 
-                        let register_x_usize = register_x as usize;
-
-                        if (0 < register_x_usize && register_x_usize < 40)
-                            && (register_x_usize == x_coord
-                                || register_x_usize + 1 == x_coord
-                                || register_x_usize - 1 == x_coord)
+                        if (0 <= register_x && register_x < 40)
+                            && (register_x == x_coord
+                                || register_x + 1 == x_coord
+                                || register_x - 1 == x_coord)
                         {
-                            pixels[y_coord][x_coord] = '#';
+                            pixels[y_coord as usize][x_coord as usize] = '#';
                         }
                         num_of_cycles += 1;
                     }
@@ -92,11 +89,12 @@ pub fn main() {
             }
         }
 
+        println!("Day 10 Total signal strength : {}", signal_strength);
+        println!("Day 10 CRT");
         pixels.iter().for_each(|x| {
             x.iter().for_each(|y| print!("{}", y));
             println!();
         });
-        println!("Day 10 Total signal strength : {}", signal_strength);
     }
 }
 

@@ -1,6 +1,7 @@
 use std::thread;
 
 mod day1;
+mod day10;
 mod day2;
 mod day3;
 mod day4;
@@ -20,8 +21,7 @@ fn main() {
     let join_7 = thread::spawn(|| day7::main());
     let join_8 = thread::spawn(|| day8::main());
     let join_9 = thread::spawn(|| day9::main());
-
-
+    let join_10 = thread::spawn(|| day10::main());
 
     join_1.join().expect("thread 1 panicked");
     join_2.join().expect("thread 2 panicked");
@@ -32,5 +32,5 @@ fn main() {
     join_7.join().expect("thread 7 panicked");
     join_8.join().expect("thread 8 panicked");
     join_9.join().expect("thread 9 panicked");
-
+    join_10.join().expect("thread 10 panicked");
 }

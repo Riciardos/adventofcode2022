@@ -1,8 +1,6 @@
 mod day1 {}
 
-use std::fs::File;
-use std::io::{self, BufRead};
-use std::path::Path;
+use super::util::read_lines;
 
 pub fn day1() {
     // read line by line
@@ -26,12 +24,4 @@ pub fn day1() {
         let sum: i32 = calories_vec[..=2].iter().sum();
         println!("Day 1 top 3 summed calories {:?}", sum)
     };
-}
-
-fn read_lines<P>(filename: P) -> io::Result<io::Lines<io::BufReader<File>>>
-where
-    P: AsRef<Path>,
-{
-    let file = File::open(filename)?;
-    Ok(io::BufReader::new(file).lines())
 }

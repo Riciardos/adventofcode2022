@@ -1,8 +1,6 @@
 mod day8 {}
 
-use std::fs::File;
-use std::io::{self, BufRead};
-use std::path::Path;
+use super::util::read_lines;
 
 pub fn main() {
     if let Ok(lines) = read_lines("src/day8/input.txt") {
@@ -143,12 +141,4 @@ fn check_visibility(point: &Point, map: &Vec<Vec<Point>>) -> i32 {
     }
 
     return visible_line_left * visible_line_right * visible_line_top * visible_line_bottom;
-}
-
-fn read_lines<P>(filename: P) -> io::Result<io::Lines<io::BufReader<File>>>
-where
-    P: AsRef<Path>,
-{
-    let file = File::open(filename)?;
-    Ok(io::BufReader::new(file).lines())
 }

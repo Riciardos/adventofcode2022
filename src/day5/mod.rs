@@ -1,8 +1,6 @@
 mod day5 {}
 
-use std::fs::File;
-use std::io::{self, BufRead};
-use std::path::Path;
+use super::util::read_lines;
 
 /**
             [M] [S] [S]
@@ -45,14 +43,6 @@ pub fn main() {
         let final_string: String = start_position.iter().map(|x| x.last().unwrap()).collect();
         println!("Day 5 final letters: {}", final_string);
     };
-}
-
-fn read_lines<P>(filename: P) -> io::Result<io::Lines<io::BufReader<File>>>
-where
-    P: AsRef<Path>,
-{
-    let file = File::open(filename)?;
-    Ok(io::BufReader::new(file).lines())
 }
 
 #[derive(Copy, Clone)]

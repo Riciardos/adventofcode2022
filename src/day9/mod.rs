@@ -1,9 +1,7 @@
 mod day9 {}
 
+use super::util::read_lines;
 use std::collections::HashSet;
-use std::fs::File;
-use std::io::{self, BufRead};
-use std::path::Path;
 
 pub fn main() {
     if let Ok(lines) = read_lines("src/day9/input.txt") {
@@ -235,12 +233,4 @@ impl Move {
             steps: 1,
         }
     }
-}
-
-fn read_lines<P>(filename: P) -> io::Result<io::Lines<io::BufReader<File>>>
-where
-    P: AsRef<Path>,
-{
-    let file = File::open(filename)?;
-    Ok(io::BufReader::new(file).lines())
 }

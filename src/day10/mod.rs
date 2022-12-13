@@ -1,9 +1,6 @@
 mod day10 {}
 
-use std::collections::HashSet;
-use std::fs::File;
-use std::io::{self, BufRead};
-use std::path::Path;
+use super::util::read_lines;
 
 pub fn main() {
     if let Ok(lines) = read_lines("src/day10/input.txt") {
@@ -112,7 +109,7 @@ impl Command {
         Command {
             command_type: Command::from_string(&string_clone),
             command_string,
-            cycles: Command::get_cycle(&string_clone),
+            cycles: Command::get_num_of_cycles(&string_clone),
             value: Command::get_value(&string_clone),
         }
     }
@@ -136,7 +133,7 @@ impl Command {
         return 0;
     }
 
-    fn get_cycle(string: &String) -> u32 {
+    fn get_num_of_cycles(string: &String) -> u32 {
         if string.starts_with("addx") {
             return 2;
         }
@@ -148,12 +145,4 @@ impl Command {
 enum CommandType {
     NoOp,
     AddX,
-}
-
-fn read_lines<P>(filename: P) -> io::Result<io::Lines<io::BufReader<File>>>
-where
-    P: AsRef<Path>,
-{
-    let file = File::open(filename)?;
-    Ok(io::BufReader::new(file).lines())
 }

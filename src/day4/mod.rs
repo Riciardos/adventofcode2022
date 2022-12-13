@@ -1,8 +1,6 @@
 mod day4 {}
 
-use std::fs::File;
-use std::io::{self, BufRead};
-use std::path::Path;
+use super::util::read_lines;
 
 pub fn main() {
     // read line by line
@@ -33,14 +31,6 @@ pub fn main() {
         }
         println!("Day 4 Total Score: {}", total_score);
     };
-}
-
-fn read_lines<P>(filename: P) -> io::Result<io::Lines<io::BufReader<File>>>
-where
-    P: AsRef<Path>,
-{
-    let file = File::open(filename)?;
-    Ok(io::BufReader::new(file).lines())
 }
 
 struct AssignmentPair {

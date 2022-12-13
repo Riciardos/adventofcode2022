@@ -36,5 +36,5 @@ fn main() {
     join_8.join().expect("thread 8 panicked");
     join_9.join().expect("thread 9 panicked");
     join_10.join().expect("thread 10 panicked");
-    join_11.join().expect("thread 10 panicked");
+    join_11.join().expect("thread 11 panicked");
 }
